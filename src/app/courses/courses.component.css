@@ -1,0 +1,9 @@
+.main-content {
+  width: 90%;
+  margin-left: 6rem; padding-top: 5rem; gap: 10px;
+}
+.head1{
+  display: flex;
+  justify-content: space-between;
+}
+

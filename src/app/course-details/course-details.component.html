@@ -1,0 +1,129 @@
+<div class="main-content">
+    <div class="add-content"> 
+        <div class="addcourse" id="addcourse">
+            <i class="pi pi-arrow-circle-left" routerLink="/courses" style="cursor: pointer;"></i>
+            <div>
+                <h4 style="display: flex; justify-content: center;">Course Details</h4>
+                <hr>
+            </div>
+            <!-- <div class="inputs">
+                <div class="inputdata">
+                    <span class="p-float-label">
+                        <input id="float-input" type="text" pInputText>
+                        <label for="float-input">Course Id</label>
+                    </span>
+                </div>
+                <div class="inputdata">
+                    <span class="p-float-label">
+                        <input id="float-input" type="text" pInputText>
+                        <label for="float-input">Course Name</label>
+                    </span>
+                </div>
+                <div class="inputdata">
+                    <span class="p-float-label">
+                        <input id="float-input" type="text" pInputText>
+                        <label for="float-input">Tutor name</label>
+                    </span>
+                </div>
+                <div class="inputdata">
+                    <span class="p-float-label">
+                        <p-inputNumber for="float-input" [(ngModel)]="value" mode="currency"     currency="INR" locale="en-IN"></p-inputNumber>
+                    </span>
+                </div>
+                <div class="inputdata" >
+                        <p-dropdown [options]="coursetype" [(ngModel)]="selectedtype" placeholder="Type" class="custom-dropdown" optionLabel="name"
+                        ></p-dropdown>                    
+                </div>
+               <div class="inputdata">
+                <div class="input-group">
+                    <div class="custom-file" style="margin-top: .2rem;">
+                      <input type="file" class="custom-file-input" id="inputGroupFile04" accept=".jpg, .png, .jpeg">
+                      <label for="inputGroupFile04" class="text-danger" style="font-size: 11px;">Choose JPG, PNG, JPEG file:</label>
+                    </div>
+                    <div class="input-group-append">
+                    </div>
+                  </div>           
+            </div>
+            <div class="inputdata">
+                <span class="p-float-label">
+                    <textarea id="float-input" rows="3" cols="20" pInputTextarea ></textarea>
+                    <label for="float-input">Course Description</label>
+                </span>
+            </div>
+
+            </div> -->
+            <!-- <div class="section">
+                <div class="addbutton" style="display: flex; justify-content: right; margin-bottom: 10px;">
+                  <button class="btn btn-primary" (click)="addNewSection()" style="border-radius: 50px;"><i class="fas fa-plus"></i> Add new</button>
+                </div>
+                <p-accordion [multiple]="true">
+                  <p-accordionTab *ngFor="let section of sections" header="{{section.header}}" [selected]="section.selected">
+                    <p>{{section.content}}</p>
+                    <div class="sectioncontent">
+                        <div class="inputdata">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" pInputText  >
+                                <label for="float-input">Section Name</label>
+                            </span>
+                        </div>
+                        
+                        <div class="inputdata">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" pInputText >
+                                <label for="float-input">Section Name</label>
+                            </span>
+                        </div>
+                       
+                        <div class="inputdata">
+                            <span class="p-float-label">
+                                <input id="float-input" type="text" pInputText >
+                                <label for="float-input">Section Name</label>
+                            </span>
+                        </div>
+                        <div class="inputdata">
+                            <div class="input-group">
+                                <div class="custom-file" style="margin-top: .2rem; display: flex; flex-direction: column;">
+                                  <input type="file" class="custom-file-input" id="inputGroupFile04" accept=".mp4, .mkv, .webm">
+                                  <label for="inputGroupFile04" class="text-danger" style="font-size: 11px;">Choose mp4, mkv, webm file:</label>
+                                </div>
+                                <div class="input-group-append">
+                                </div>
+                              </div>           
+                        </div>
+                    </div>
+                    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"></p-confirmDialog>
+                    <div style="display: flex; justify-content: right;">
+                        <div  (click)="confirm1(section)"  style="display: flex; justify-content: right; color: red; cursor: pointer;"><i class="fa fa-trash" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </p-accordionTab>
+                </p-accordion>
+              </div>               -->
+        </div>
+              <!-- new table -->
+              <form [formGroup]="courseForm">
+                <div class="inputs">
+                  <div class="inputdata">
+                    <span class="p-float-label">
+                      <input id="courseId" type="text" pInputText [(ngModel)]="course_code" formControlName="courseId">
+                      <label for="courseId">Course Code</label>
+                    </span>
+                  </div>
+                  <div class="inputdata">
+                    <span class="p-float-label">
+                      <input id="courseName" type="text" pInputText [(ngModel)]="course_name" formControlName="courseName" >
+                      <label for="courseName">Course Name</label>
+                    </span>
+                  </div>
+                  <div class="inputdata">
+                    <span class="p-float-label">
+                      <textarea id="courseDescription" rows="3" cols="20" pInputTextarea [(ngModel)]="course_description" formControlName="courseDescription"></textarea>
+                      <label for="courseDescription">Course Description</label>
+                    </span>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary"   [disabled]="!courseForm.valid" (click)="senddata()">Submit</button>
+              </form>
+              
+</div>
+</div>

@@ -1,0 +1,8 @@
+.main-content {
+    width: 90%;
+    margin-left: 5rem; padding-top: 5rem; gap: 10px;
+}
+#search{
+    display: flex;
+    justify-content: right;
+}

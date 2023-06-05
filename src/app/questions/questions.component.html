@@ -1,0 +1,773 @@
+<div class="main-content">
+  
+  <div>
+<div class="c_button">
+  <button type="button"(click)="createnew()" class="btn-sm btn-primary createbutton">Create content</button>
+</div>
+<p-dialog header="Course Content" [(visible)]="createcontent" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '70vw' }"  [draggable]="false" [resizable]="false" >
+
+  <p-tabView  #tabView>
+    <p-tabPanel header="Question content" [disabled]="!course_content">
+      <div>
+        <form (ngSubmit)="addRow()" #questionForm="ngForm">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Course name" [(ngModel)]="rowdata.course_name"
+                name="course_name" aria-label="Course name" required>
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Chapter name" [(ngModel)]="rowdata.chapter_name"
+                name="chapter_name" aria-label="chapter name" required>
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Question" [(ngModel)]="rowdata.question"
+                name="question" aria-label="Question" required>
+            </div>
+            <div class="col-md-4">
+              <textarea class="form-control" placeholder="Answer" [(ngModel)]="rowdata.answer" name="answer"
+                aria-label="Answer" required></textarea>
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Video link" [(ngModel)]="rowdata.video_link"
+                name="video_link" aria-label="link" required>
+            </div>
+            <div class="col-md-4">
+              <input type="text" class="form-control" placeholder="Course code" [(ngModel)]="rowdata.course_code"
+                name="course_code" aria-label="code" required>
+            </div>
+            <div class="col-md-4">
+              <input type="number" class="form-control" placeholder="Module no" [(ngModel)]="rowdata.module_no"
+                name="module_no" aria-label="Course Module" required>
+            </div>
+          </div>
+          <br>
+          <div style="display: flex;justify-content: right;">
+            <button type="submit" class="btn btn-primary"  style="width: 100px; border-radius: 100px;" [disabled]="!questionForm.form.valid">Save</button>
+          </div>
+        </form>
+        <hr>
+      </div>
+    </p-tabPanel>
+   
+    <!-- <p-tabPanel header="Practice content" [disabled]="practice_content" >
+      <div>
+        <form (ngSubmit)="addpracticedata()"  #Form="ngForm">
+        <div class="col practicecontentinputs">
+        
+          <div class="leftinputs">
+            <div class="selectanswer">
+              <div class="form-group">
+                <select class="form-control" id="answerr" [(ngModel)]="practicedata.course_name"  name="codecoursee"
+                   required>
+                   <option value="">Select Course Name</option>
+                      <option> {{rowdata.course_name}}</option>
+                </select>
+              </div>
+            </div>
+             
+          </div>
+         <div style="width: -webkit-fill-available;;">
+          <div class="col-md-4" style="width: auto; display: flex; gap: 15px; flex-wrap: wrap;">
+            <input type="text" class="form-control" placeholder="Enter sentence with three underscore" [(ngModel)]="practicedata.sentence"
+              name="sentence" aria-label="sentence" style="width: 100%;" required>
+            <textarea class="form-control" rows="3" cols="40" placeholder="Enter Question" [(ngModel)]="practicedata.p_question"
+              name="sentence" aria-label="sentence" style="width: 100%;" required></textarea>
+          </div>
+          
+          <div class="col-md-4" style="width: auto;">
+            <div class="addoptions">
+              <input type="text" class="form-control" placeholder="Enter answer" [(ngModel)]="practicedata.answer"
+                value="True" name="True" style="width: auto;" rows="5" cols="" required>
+              <input type="text" class="form-control" placeholder="Enter Hint" [(ngModel)]="practicedata.hint"
+                value="Hint" name="Hint" style="width: auto;" required>
+
+
+            </div>
+          </div>
+
+         </div>
+
+
+        </div>
+
+        <div class="addbutton">
+          <button type="submit" class="btn btn-primary" (click)="nexttab(tabView, 2)" [disabled]="!Form.form.valid">Next</button>
+        </div>
+        </form>
+        <hr>
+
+
+    
+
+      </div>
+    </p-tabPanel> -->
+        <!-- <div style="display: flex; justify-content: right;">
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"
+              (input)="onSearch(searchQuery)" />
+          </span>
+        </div> -->
+    <!-- <p-tabPanel header="Quiz content" [disabled]="quiz_content">
+      <p-dropdown [options]="questiontype" [(ngModel)]="newQuestion.selectedtype" optionLabel="name"
+        [style]="{'width': 'auto'}" class="mcqdropdown">
+      </p-dropdown>
+      <div class=" quizcontent" *ngIf="newQuestion.selectedtype && newQuestion.selectedtype.code === 'MCQ'">
+
+        <form (ngSubmit)="onSubmit()" #questionForm="ngForm">
+
+          <div class="col mcqinputs">
+            <div class="leftinputs">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.course_name" name="codecourse" (click)="updateModuleNo()" required>
+                      <option value="">Select Course Name</option>
+                      <option> {{rowdata.course_name}}</option>
+                    </select>
+                    
+                  </div>
+                </div>
+     
+            </div>
+            <div style="width: -webkit-fill-available;">
+              <div class="col-md-4" style="width: 100%;">
+                <input type="text" class="form-control" placeholder="Enter question" [(ngModel)]="newQuestion.question"
+                  name="question" aria-label="question" style="width: 100%;" required>
+              </div>
+              <div class="col-md-4" style="width: 100%;">
+                <div class="addoptions">
+                  <input type="text" class="form-control" placeholder="Option 1" [(ngModel)]="newQuestion.option1"
+                    name="option1" required>
+                  <input type="text" class="form-control" placeholder="Option 2" [(ngModel)]="newQuestion.option2"
+                    name="option2" required>
+                  <input type="text" class="form-control" placeholder="Option 33" [(ngModel)]="newQuestion.option3"
+                    name="option3" required>
+                  <input type="text" class="form-control" placeholder="Option 4" [(ngModel)]="newQuestion.option4"
+                    name="option4" required>
+
+                </div>
+              </div>
+              <div class="col-md-4 mt-3">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                      style="width: 100%;" required>
+                      <option value="" disabled>Select an answer</option>
+                      <option value="0">Option 1</option>
+                      <option value="1">Option 2</option>
+                      <option value="2">Option 3</option>
+                      <option value="3">Option 4</option>
+                    </select>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <div class="addbutton">
+            <button type="submit" class="btn btn-primary" (click)="nexttab(tabView, 3)" [disabled]="!questionForm.form.valid">Next</button>
+          </div>
+        </form>
+        <hr>
+     
+
+
+
+
+      </div>
+      <div class=" quizcontent" *ngIf="newQuestion.selectedtype && newQuestion.selectedtype.code === 'TOF'">
+
+        <form (ngSubmit)="onSubmit()" #questionForm="ngForm">
+
+          <div class="col quizinput">
+            <div class="leftinputs">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.course_name"  name="ccodeecourse"
+                       required>
+                      <option value="">Select Course code</option>
+                      <option> {{rowdata.course_name}}</option>
+                    </select>
+                  </div>
+                </div>
+    
+            </div>
+           <div style="width: -webkit-fill-available;" >
+            <div class="col-md-4" style="width: 100%;">
+              <input type="text" class="form-control" placeholder="Enter question" [(ngModel)]="newQuestion.question"
+                name="question" aria-label="question" style="width: 100%;" required>
+            </div>
+            <div class="col-md-4" style="width: auto;">
+              <div class="addoptions">
+                <input type="text" class="form-control" placeholder="True" [(ngModel)]="newQuestion.option1"
+                  value="True" name="True" style="width: auto;" required>
+                <input type="text" class="form-control" placeholder="False" [(ngModel)]="newQuestion.option2"
+                  value="False" name="False" style="width: auto;" required>
+
+
+              </div>
+            </div>
+            <div class="col-md-4 mt-3">
+              <div class="selectanswer">
+                <div class="form-group">
+                  <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                    style="width: 100%;" required>
+                    <option value="" disabled>Select an answer</option>
+                    <option>True</option>
+                    <option>False</option>
+                  </select>
+
+                </div>
+              </div>
+            </div>
+           </div>
+
+
+          </div>
+
+          <div class="addbutton">
+            <button type="submit" class="btn btn-primary"  (click)="nexttab(tabView, 3)" [disabled]="!questionForm.form.valid">Next</button>
+          </div>
+        </form>
+        <hr>
+      </div>
+    </p-tabPanel> -->
+  </p-tabView>
+
+</p-dialog>
+  
+  </div>
+<br>
+<p-dialog [(visible)]="showpractice_content" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '90vw','margin-left':'3.5rem' }" [draggable]="false" [resizable]="false" [modal]="true" (onHide)="emptyArrays()">
+  <p-tabView #tabView>
+    <p-tabPanel header="Practice content">
+<p-dialog header="Practice Content" [(visible)]="createp_content" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '80vw' }"  [draggable]="false" [resizable]="false" [modal]="true">
+  <div>
+    <!-- ssssssssssssssssssss -->
+    <form (ngSubmit)="addpracticedata()"  #Form="ngForm">
+    <div class="col practicecontentinputs">
+    
+      <div class="leftinputs">
+        <div class="selectanswer">
+          <div class="form-group">
+            <select class="form-control" id="answerr" [(ngModel)]="practicedata.course_name"  name="codecoursee"
+               required>
+               <option value="">Select Course Name</option>
+                  <option> {{course_c_name}}</option>
+
+               <!-- <option *ngFor="let data of uniqueModuleName">{{data}}</option> -->
+
+            </select>
+          </div>
+        </div>
+         
+      </div>
+     <div style="width: -webkit-fill-available;;">
+      <div class="col-md-4" style="width: auto; display: flex; gap: 15px; flex-wrap: wrap;">
+        <input type="text" class="form-control" placeholder="Enter sentence with three underscore" [(ngModel)]="practicedata.sentence"
+          name="sentence" aria-label="sentence" style="width: 100%;" required>
+        <textarea class="form-control" rows="3" cols="40" placeholder="Enter Question" [(ngModel)]="practicedata.p_question"
+          name="sentence" aria-label="sentence" style="width: 100%;" required></textarea>
+      </div>
+      
+      <div class="col-md-4" style="width: auto;">
+        <div class="addoptions">
+          <input type="text" class="form-control" placeholder="Enter answer" [(ngModel)]="practicedata.answer"
+            value="True" name="True" style="width: auto;" rows="5" cols="" required>
+          <input type="text" class="form-control" placeholder="Enter Hint" [(ngModel)]="practicedata.hint"
+            value="Hint" name="Hint" style="width: auto;" required>
+
+
+        </div>
+      </div>
+
+     </div>
+      <!-- {{stentData.course_name}} -->
+
+
+    </div>
+
+    <div class="addbutton">
+      <button type="submit" class="btn btn-primary" [disabled]="!Form.form.valid">Save</button>
+    </div>
+    </form>
+    <hr>
+
+    <!-- <div style="display: flex; justify-content: right;">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"
+          (input)="onSearch(searchQuery)" />
+      </span>
+    </div> -->
+
+
+  </div>
+</p-dialog>
+     
+      <div class="c_button">
+        <button type="button"(click)="createpractice()" class="btn-sm btn-primary createbutton">Create practice content</button>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">S.no</th>
+              <th scope="col">Course Name</th>
+              <th scope="col">Course code</th>
+              <th scope="col" style="width: 14%;">Sentence</th>
+              <th scope="col" style="width: 14%;">Answer</th>
+              <th scope="col" style="width: 14%;">Hint</th>           
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of filter_p_data ; let i=index">
+    
+              <th scope="row">{{i+1}}</th>
+              <td >{{row.course_name}}</td>
+              <!-- <td *ngIf="row.isBeingEdited"><input class="form-control" [(ngModel)]="row.course_name"
+                  name="course_name" type="text" aria-label="course name" disabled></td> -->
+              <td >{{row.course_code}}</td>
+              <!-- <td *ngIf="row.isBeingEdited"><input class="form-control" [(ngModel)]="row.course_code"
+                  name="course_code" type="text" aria-label="chapter name" disabled></td> -->
+              <td *ngIf="!row.isBeingEdited" pTooltip="{{row.sentence}}" tooltipPosition="top">
+                <span class="for-tooltip1">
+                  {{row.sentence}}
+                </span>
+              </td>
+              <td *ngIf="row.isBeingEdited" ><textarea class="form-control" [(ngModel)]="row.sentence" name="sentence_"
+                  aria-label="chapter name"></textarea></td>
+              <td *ngIf="!row.isBeingEdited" pTooltip="{{row.pc_answer}}" tooltipPosition="top">
+                <span class="for-tooltip1">               
+                {{row.pc_answer}}
+                </span>
+              </td>
+              <td *ngIf="row.isBeingEdited"><textarea class="form-control" [(ngModel)]="row.pc_answer" name="answer_"
+                  aria-label="question" cols="30" rows=""></textarea></td>
+              <td *ngIf="!row.isBeingEdited" pTooltip="{{row.hint}}" tooltipPosition="top">
+                <span class="for-tooltip1">
+                {{row.hint}}
+                </span>               
+              </td>
+              <td *ngIf="row.isBeingEdited"><input type="text" class="form-control" [(ngModel)]="row.hint" name="hint_"
+                  aria-label="answer" ></td>
+              <td>
+                <i class="fas fa-edit" *ngIf="!row.isBeingEdited" (click)="editpRow(row)"></i> &nbsp;
+                <i class="fas fa-trash" *ngIf="!row.isBeingEdited" (click)="deleteRow(row); refreshPage()"></i>
+    
+                <i class="fas fa-save" *ngIf="row.isBeingEdited" (click)="save(row)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </p-tabPanel>
+    <p-tabPanel header="Quiz contents">
+      <p-dialog [(visible)]="create_qcontent" class="q_type" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '90vw','margin-left':'3.5rem' }" [draggable]="false" [resizable]="false" [modal]="true" (onHide)="emptyArrays()">
+        <p-dropdown [options]="questiontype" [(ngModel)]="newQuestion.selectedtype" optionLabel="name"
+        [style]="{'width': 'auto'}" class="mcqdropdown">
+      </p-dropdown>
+      <div class=" quizcontent" *ngIf="newQuestion.selectedtype && newQuestion.selectedtype.code === 'MCQ'">
+  
+        <form (ngSubmit)="onSubmit()" #questionForm="ngForm">
+  
+          <div class="col mcqinputs">
+            <div class="leftinputs">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.course_name" name="codecourse" (click)="updateModuleNo()" required>
+                      <option value="">Select Course Name</option>
+                      <option> {{course_c_name}}</option>
+                      <!-- <option *ngFor="let data of uniqueModuleName">{{data}}</option> -->
+                    </select>
+                    
+                  </div>
+                </div>
+                <!-- <div class="selectanswer mt-3">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.module_no" name="codecourse"
+                       required>
+                      <option value="">Select Module</option>
+  
+                      <option *ngFor="let moduleNo of uniqueModuleNos">{{moduleNo}}</option>
+  
+                    </select>
+                  </div>
+                </div> -->
+            </div>
+            <!-- maincontent -->
+            <div style="width: -webkit-fill-available;">
+              <div class="col-md-4" style="width: 100%;">
+                <input type="text" class="form-control" placeholder="Enter question" [(ngModel)]="newQuestion.question"
+                  name="question" aria-label="question" style="width: 100%;" required>
+              </div>
+              <div class="col-md-4" style="width: 100%;">
+                <div class="addoptions">
+                  <input type="text" class="form-control" placeholder="Option 1" [(ngModel)]="newQuestion.option1"
+                    name="option1" required>
+                  <input type="text" class="form-control" placeholder="Option 2" [(ngModel)]="newQuestion.option2"
+                    name="option2" required>
+                  <input type="text" class="form-control" placeholder="Option 33" [(ngModel)]="newQuestion.option3"
+                    name="option3" required>
+                  <input type="text" class="form-control" placeholder="Option 4" [(ngModel)]="newQuestion.option4"
+                    name="option4" required>
+  
+                </div>
+              </div>
+              <div class="col-md-4 mt-3">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                      style="width: 100%;" required>
+                      <option value="" disabled>Select an answer</option>
+                      <option value="0">Option 1</option>
+                      <option value="1">Option 2</option>
+                      <option value="2">Option 3</option>
+                      <option value="3">Option 4</option>
+                    </select>
+  
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- {{GetcontentData.course_name}} -->
+  
+  
+          </div>
+  
+          <div class="addbutton">
+            <button type="submit" class="btn btn-primary" [disabled]="!questionForm.form.valid">Save</button>
+          </div>
+        </form>
+        <hr>
+     
+  
+  
+  
+  
+      </div>
+      <div class=" quizcontent" *ngIf="newQuestion.selectedtype && newQuestion.selectedtype.code === 'TOF'">
+  
+        <form (ngSubmit)="onSubmit()" #questionForm="ngForm">
+  
+          <div class="col quizinput">
+            <div class="leftinputs">
+                <div class="selectanswer">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.course_name"  name="ccodeecourse"
+                       required>
+                      <option value="">Select Course code</option>
+                      <option> {{rowdata.course_name}}</option>
+                      <!-- <option *ngFor="let data of uniqueModuleName">{{data}}</option>   -->
+                    </select>
+                  </div>
+                </div>
+                <!-- <div class="selectanswer mt-3">
+                  <div class="form-group">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.module_no" name="codecourse"
+                      style="width: 100%;" required>
+                      <option value="">Select Module</option>
+  
+                      <option *ngFor="let moduleNo of uniqueModuleNos">{{moduleNo}}</option>
+  
+                    </select>
+                  </div>
+              </div> -->
+            </div>
+           <div style="width: -webkit-fill-available;" >
+            <div class="col-md-4" style="width: 100%;">
+              <input type="text" class="form-control" placeholder="Enter question" [(ngModel)]="newQuestion.question"
+                name="question" aria-label="question" style="width: 100%;" required>
+            </div>
+            <div class="col-md-4" style="width: auto;">
+              <div class="addoptions">
+                <input type="text" class="form-control" placeholder="True" [(ngModel)]="newQuestion.option1"
+                  value="True" name="True" style="width: auto;" required>
+                <input type="text" class="form-control" placeholder="False" [(ngModel)]="newQuestion.option2"
+                  value="False" name="False" style="width: auto;" required>
+  
+  
+              </div>
+            </div>
+            <div class="col-md-4 mt-3">
+              <div class="selectanswer">
+                <div class="form-group">
+                  <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                    style="width: 100%;" required>
+                    <option value="" disabled>Select an answer</option>
+                    <option>True</option>
+                    <option>False</option>
+                  </select>
+  
+                </div>
+              </div>
+            </div>
+           </div>
+            <!-- {{GetcontentData.course_name}} -->
+  
+  
+          </div>
+  
+          <div class="addbutton">
+            <button type="submit" class="btn btn-primary"   [disabled]="!questionForm.form.valid">Save</button>
+          </div>
+        </form>
+        <hr>
+      </div>
+      </p-dialog>
+   
+      <div class="c_button">
+        <button type="button"(click)="createquizcontent()" class="btn-sm btn-primary createbutton">Create quiz content</button>
+      </div>
+      <br>
+          <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th>Course name</th>
+                  <th>Course code</th>
+                  <th>Module</th>
+                  <th>Question</th>
+                  <th>Options</th>
+                  <th>Answer</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let question of filter_data; let i = index">
+                  <td *ngIf="!question.isBeingEdited">{{ question.course_name }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="text" class="form-control" [(ngModel)]="question.course_name" name="coursename" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited">{{ question.course_code }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="text" class="form-control" [(ngModel)]="question.course_code" name="coursecode" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited">{{ question.module_no }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="number" class="form-control" [(ngModel)]="question.module_no" name="coursename" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited" pTooltip="{{ question.question }}" tooltipPosition="top">
+                <span class="for-tooltip1">                    
+                    {{ question.question }}
+                </span>
+                  </td>
+                  <td *ngIf="question.isBeingEdited">
+                    <textarea class="form-control" [(ngModel)]="question.question" name="question" cols="50"
+                      rows="5"></textarea>
+                  </td>
+                  <td>
+                    <div *ngIf="!question.isBeingEdited">
+                      <ul>
+                        <li>{{ question.option1 }}</li>
+                        <li>{{ question.option2 }}</li>
+                        <li *ngIf="question.option3 !== null">{{ question.option3 }}</li>
+                        <li *ngIf="question.option4 !== null">{{ question.option4 }}</li>
+                      </ul>
+                    </div>
+                    <div *ngIf="question.isBeingEdited">
+                      <ul>
+                        <li> <input type="text" class="form-control" placeholder="Option 1" [(ngModel)]="question.option1"
+                            name="option1" required></li>
+                        <li>
+                          <input type="text" class="form-control" placeholder="Option 2" [(ngModel)]="question.option2"
+                            name="option2" required>
+                        </li>
+                        <li *ngIf="question.option3 !== null">
+                          <input type="text" class="form-control" placeholder="Option 33" [(ngModel)]="question.option3"
+                            name="option3" required>
+                        </li>
+                        <li *ngIf="question.option4 !== null">
+                          <input type="text" class="form-control" placeholder="Option 4" [(ngModel)]="question.option4"
+                            name="option4" required>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+  
+                  <td *ngIf="!question.isBeingEdited">{{ question.answer }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                      style="width: auto" required>
+                      <option value="" disabled>Select an answer</option>
+                      <option value="0">Option 1</option>
+                      <option value="1">Option 2</option>
+                      <option value="2">Option 3</option>
+                      <option value="3">Option 4</option>
+                    </select>
+                  </td>
+                  <td>
+                    <i class="fas fa-edit" *ngIf="!question.isBeingEdited" (click)="editdata(question)"></i> &nbsp;
+                    <i class="fas fa-trash" *ngIf="!question.isBeingEdited"
+                      (click)="deletedata(question); refreshPage()"></i>
+                    <i class="fas fa-save" *ngIf="question.isBeingEdited" (click)="savedata(question)"></i>
+                  </td>
+                </tr>
+              </tbody>
+             
+            </table>
+            <div class="d-flex justify-content-center" *ngIf="!filter_data || filter_data?.length === 0">
+              <span>No records found</span>
+          </div>
+          </div>
+        <!-- <p-tabPanel header="TOF">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Course name</th>
+                  <th>Course code</th>
+                  <th>Module</th>
+                  <th>Question</th>
+                  <th>Options</th>
+                  <th>Answer</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let question of filter_data; let i = index">
+                  <td *ngIf="!question.isBeingEdited">{{ question.course_name }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="text" class="form-control" [(ngModel)]="question.course_name" name="coursename" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited">{{ question.course_code }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="text" class="form-control" [(ngModel)]="question.course_code" name="coursecode" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited">{{ question.module_no }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <input type="number" class="form-control" [(ngModel)]="question.module_no" name="coursename" disabled>
+                  </td>
+                  <td *ngIf="!question.isBeingEdited">{{ question.question }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <textarea class="form-control" [(ngModel)]="question.question" name="question" cols="50"
+                      rows="5"></textarea>
+                  </td>
+                  <td>
+                    <div *ngIf="!question.isBeingEdited">
+                      <ul>
+                        <li>{{ question.option1 }}</li>
+                        <li>{{ question.option2 }}</li>
+                        <li *ngIf="question.option3 !== null">{{ question.option3 }}</li>
+                        <li *ngIf="question.option4 !== null">{{ question.option4 }}</li>
+                      </ul>
+                    </div>
+                    <div *ngIf="question.isBeingEdited">
+                      <ul>
+                        <li>
+                          <input type="text" class="form-control" placeholder="Option 1" [(ngModel)]="question.option1"
+                            name="option1" required>
+                        </li>
+                        <li>
+                          <input type="text" class="form-control" placeholder="Option 212" [(ngModel)]="question.option2"
+                            name="option2" required>
+                        </li>
+                        <li *ngIf="question.option3 !== null">
+                          <input type="text" class="form-control" placeholder="Option 3666" [(ngModel)]="question.option3"
+                            name="option3" required>
+                        </li>
+                        <li *ngIf="question.option4 !== null">
+                          <input type="text" class="form-control" placeholder="Option 4" [(ngModel)]="question.option4"
+                            name="option4" required>
+                        </li>
+                      </ul>
+                    </div>
+                  </td>
+  
+  
+  
+                  <td *ngIf="!question.isBeingEdited">{{ question.answer }}</td>
+                  <td *ngIf="question.isBeingEdited">
+                    <select class="form-control" id="answer" [(ngModel)]="newQuestion.answer" name="answer"
+                      style="width: auto" required>
+                      <option value="" disabled>Select an answer</option>
+                      <option value="0">Option 1</option>
+                      <option value="1">Option 2</option>
+                      <option value="2">Option 3</option>
+                      <option value="3">Option 4</option>
+                    </select>
+                  </td>
+                  <td>
+                    <i class="fas fa-edit" *ngIf="!question.isBeingEdited" (click)="editdata(question)"></i> &nbsp;
+                    <i class="fas fa-trash" *ngIf="!question.isBeingEdited"
+                      (click)="deletedata(question); refreshPage()"></i>
+                    <i class="fas fa-save" *ngIf="question.isBeingEdited" (click)="savedata(question)"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+           </div>
+        </p-tabPanel> -->
+    </p-tabPanel>
+  </p-tabView>
+
+</p-dialog>
+  <div style="width: 98%;">
+    <div style="display: flex;">
+      <span class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Search" [(ngModel)]="searchQuery"
+          (input)="onSearch(searchQuery)" style="width: 100%;" />
+      </span>
+    </div>
+<br>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered">
+        <thead>
+          <tr >
+            <th scope="col">S.no</th>
+            <th scope="col" style="width: 14%;">Course Name</th>
+            <th scope="col" style="width: 14%;">Course Code</th>
+            <th scope="col" style="width: 14%;">Module</th>
+            <th scope="col">Question</th>
+            <th scope="col">Answer</th>
+            <th scope="col">Video link</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of filteredData ; let i=index" >
+
+            <th scope="row">{{i+1}}</th>
+            <td *ngIf="!row.isBeingEdited" (click)="sendModuleNo(row.course_name);showcontent();sendcourse_name(row.course_name)">{{row.course_name}}</td>
+            <td *ngIf="row.isBeingEdited"><input class="form-control" [(ngModel)]="row.course_name"
+                name="course_name" type="text" aria-label="course name"></td>
+            <td *ngIf="!row.isBeingEdited" (click)="sendModuleNo(row.course_name);showcontent();sendcourse_name(row.course_name)">{{row.course_code}}</td>
+            <td *ngIf="row.isBeingEdited"><input class="form-control" [(ngModel)]="row.course_code"
+                name="course_code" type="text" aria-label="chapter name"></td>
+            <td *ngIf="!row.isBeingEdited" (click)="sendModuleNo(row.course_name);showcontent();sendcourse_name(row.course_name)">{{row.module_no}}</td>
+            <td *ngIf="row.isBeingEdited"><input class="form-control" [(ngModel)]="row.module_no" name="module_no"
+                type="number" aria-label="chapter name"></td>
+            <td *ngIf="!row.isBeingEdited" pTooltip="{{row.question}}" tooltipPosition="top" (click)="sendModuleNo(row.course_name);showcontent();sendcourse_name(row.course_name)">{{row.question}}</td>
+            <td *ngIf="row.isBeingEdited" ><textarea class="form-control" [(ngModel)]="row.question" name="question"
+                aria-label="question" cols="30" rows="4"></textarea></td>
+            <td *ngIf="!row.isBeingEdited" pTooltip="{{row.answer}}" tooltipPosition="top" (click)="sendModuleNo(row.course_name);showcontent();sendcourse_name(row.course_name)">
+              <span class="for-tooltip">{{row.answer}}</span>
+            </td>
+            <td *ngIf="row.isBeingEdited"><textarea class="form-control" [(ngModel)]="row.answer" name="answer"
+                aria-label="answer" cols="60" rows="6"></textarea></td>
+            <td><a href="{{row.video_link}}">{{row.video_link}}</a></td>
+            <td>
+              <i class="fas fa-edit" *ngIf="!row.isBeingEdited" (click)="editRow(row)"></i> &nbsp;
+              <i class="fas fa-trash" *ngIf="!row.isBeingEdited" (click)="deleteRow(row)"></i>
+
+              <i class="fas fa-save" *ngIf="row.isBeingEdited" (click)="save(row)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+  </div>
+</div>
+
+
+<div>
+
+
+
+</div>

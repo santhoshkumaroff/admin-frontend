@@ -1,0 +1,123 @@
+/* @import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css"; */
+
+
+.main-content {
+    width: auto;
+    margin-left: 6rem;
+    padding-top: 5rem;
+    gap: 10px;
+    }
+.search
+{
+  display: flex;
+  width: 30%;
+}
+.addbutton{
+  width: 100%;
+  display: flex;
+  margin-top: 1rem;
+  justify-content: left;
+ }
+.createbutton{
+  border: none;
+  background-color: #105ea5;
+}
+.c_button{
+  width: 99%;
+  display: flex;
+  justify-content: right;
+}
+ .for-tooltip{
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 240px;
+ }
+ .for-tooltip1{
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 150px;
+ }
+
+ .quizcontent{
+  margin: 1rem;
+ }
+ .addoptions{
+  display: grid; 
+  grid-template-columns: auto auto; 
+  gap: 15px;
+  margin-top: 1rem;
+ }
+
+ .selectanswer{
+  width: 100%;
+ }
+ .quizinputs{
+  width: 100%;
+    display: flex;
+    gap: 20px;
+  }
+  .quizinput{
+      width: 100%;
+      display: flex;
+      gap: 20px;
+  }
+  .practicecontentinputs{
+      width: 100%;
+      display: flex;
+      gap: 20px;
+    }
+    .mcqinputs{
+      display: flex;
+      gap: 20px;
+      width: 100%;
+      /* flex-wrap: wrap; */
+      
+    }
+    :host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link{
+    color: #4c4c4c;
+  }
+ @media only screen and (max-width: 768px) {
+  .addoptions {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  
+    .main-content {
+      margin-left: 4rem;
+    }
+  
+    .quizcontent {
+      margin: 1rem 0rem 0rem 0rem;
+    }
+  
+    .quizinputs {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    .leftinputs {
+      width: 100%;
+    }
+    .quizinput{
+      display: flex;
+      flex-wrap: wrap;
+  }
+   .practicecontentinputs{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  :host ::ng-deep .mcqdropdown .p-dropdown .p-dropdown-label{
+    width: 144px;
+  }
+
+ }
+ :host ::ng-deep .q_type .p-dialog-content{
+  /* padding: 1rem 1rem 8.5rem 1rem; */
+}

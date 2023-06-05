@@ -1,0 +1,47 @@
+<div class="main-content">
+<div id="content">
+  <div class="head1">
+    <div class="search">
+      <div class="p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText>     
+    </div>
+    </div>
+      <div class="addbutton">
+       
+        <button class="btn btn-primary" routerLink="/course-details"><i class="fas fa-plus"></i> Add new</button>
+      </div>
+  
+  </div>
+    <hr>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Course Code</th>
+                <th scope="col">Course name</th>
+                <th scope="col">Course Description</th>
+              
+  
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cdata of GetData let i=index">
+                <td>{{i+1}}</td>
+                <td>{{cdata.course_id}}</td>
+                <td>{{cdata.course_name}}</td>
+                <td>{{cdata.course_description}}</td>
+                <td></td>
+                <td></td>
+              </tr>
+              
+            </tbody>
+          </table>
+      </div>
+
+</div>
+
+</div>
+
+
